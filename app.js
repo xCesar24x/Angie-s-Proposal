@@ -601,7 +601,7 @@ function showStage3() {
         // Continuous pulsating heartbeat effect on the WhatsApp button
         gsap.to('#btn-whatsapp', {
           scale: 1.05,
-          duration: 0.8,
+          duration: 1.5,
           ease: 'sine.inOut',
           yoyo: true,
           repeat: -1,

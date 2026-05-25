@@ -578,20 +578,20 @@ body {
   width: 88%;
   padding: 18px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #25d366, #1aa851);
+  background: linear-gradient(135deg, var(--c-blue), var(--c-pink));
   color: #fff;
   font-family: 'Nunito', sans-serif;
   font-size: 1.05rem;
   font-weight: 900;
   text-decoration: none;
-  box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+  box-shadow: 0 6px 28px rgba(74, 158, 255, 0.5);
   letter-spacing: 0.3px;
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .btn-whatsapp:active {
   transform: scale(0.96);
-  box-shadow: 0 3px 12px rgba(37,211,102,0.35);
+  box-shadow: 0 3px 12px rgba(74, 158, 255, 0.35);
 }
 
 /* Final message */
