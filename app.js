@@ -483,14 +483,8 @@ function showTimePicker() {
     <button class="time-slot" onclick="selectTime('${t}')">${t}</button>
   `).join('');
 
-  gsap.from('.time-slot', {
-    scale: 0,
-    opacity: 0,
-    duration: 0.3,
-    stagger: 0.04,
-    ease: 'back.out(1.7)',
-  });
-
+  // We use CSS animation instead of GSAP stagger for reliability on mobile
+  
   gsap.from('#time-picker', {
     y: 20,
     opacity: 0,
