@@ -395,6 +395,12 @@ body {
   cursor: pointer;
   border: 2px solid transparent;
   transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .cal-day:not(.past):not(.empty):hover {

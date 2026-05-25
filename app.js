@@ -425,15 +425,6 @@ function renderCalendar() {
   }
 
   grid.innerHTML = html;
-
-  // Animate cells in
-  gsap.from('.cal-day:not(.empty)', {
-    scale: 0,
-    opacity: 0,
-    duration: 0.28,
-    stagger: { each: 0.012, from: 'start' },
-    ease: 'back.out(1.4)',
-  });
 }
 
 function prevMonth() {
