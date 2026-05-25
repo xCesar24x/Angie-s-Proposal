@@ -413,10 +413,14 @@ function renderCalendar() {
                     selectedDate.getDate()  === d &&
                     selectedDate.getMonth() === currentMonth;
 
+    // Cutoff logic: Dates before May 26, 2026 are past
+    const isPast = currentYear === 2026 && currentMonth === 4 && d < 26;
+
     let cls = 'cal-day';
     if (isSelec) cls += ' selected';
+    if (isPast) cls += ' past';
 
-    const click = `onclick="selectDay(${d})"`;
+    const click = isPast ? '' : `onclick="selectDay(${d})"`;
     html += `<div class="${cls}" ${click}>${d}</div>`;
   }
 
