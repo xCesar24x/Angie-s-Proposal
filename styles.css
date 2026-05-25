@@ -104,30 +104,32 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid rgba(74,158,255,0.55);
-  box-shadow: var(--glow-blue), 0 0 0 7px rgba(74,158,255,0.1);
+  border: 6px dashed #ffb6c1;
+  box-shadow: 0 0 0 6px #ff6b9d, 0 0 20px rgba(255,107,157,0.6);
   display: block;
 }
 
-/* Sparkle ring */
+/* Sparkle ring (now a pink flower wreath) */
 .sparkle-ring {
   position: absolute;
-  inset: -32px;
+  inset: -30px;
   pointer-events: none;
   overflow: visible;
 }
 
 .sp {
   position: absolute;
-  font-size: 22px;
+  font-size: 26px; /* slightly larger for flowers */
   line-height: 1;
 }
-.sp1 { top:  -2%;  left: 38%; }
-.sp2 { top:  10%;  right: 2%; }
-.sp3 { top:  48%;  right: -4%; }
-.sp4 { bottom: 2%; right: 18%; }
-.sp5 { bottom: -2%; left: 38%; }
-.sp6 { top:  48%;  left: -4%; }
+.sp1 { top: -2%; left: 44%; }
+.sp2 { top: 11%; right: 11%; }
+.sp3 { top: 44%; right: -2%; }
+.sp4 { bottom: 11%; right: 11%; }
+.sp5 { bottom: -2%; left: 44%; }
+.sp6 { bottom: 11%; left: 11%; }
+.sp7 { top: 44%; left: -2%; }
+.sp8 { top: 11%; left: 11%; }
 
 /* Titles */
 .s1-title {
@@ -199,19 +201,19 @@ body {
   padding: 18px 0;
   border: none;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, #ff6b9d, #e6407b);
   color: #fff;
   font-family: 'Nunito', sans-serif;
   font-size: 1.25rem;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 6px 28px rgba(34,197,94,0.55);
+  box-shadow: 0 6px 28px rgba(255, 107, 157, 0.55);
   letter-spacing: 0.3px;
   transition: box-shadow 0.2s;
 }
 
 .btn-yes:active {
-  box-shadow: 0 3px 12px rgba(34,197,94,0.4);
+  box-shadow: 0 3px 12px rgba(255, 107, 157, 0.4);
 }
 
 .btn-yes-icon { font-size: 1.4rem; }
