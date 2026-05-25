@@ -68,10 +68,7 @@ body {
   overscroll-behavior: none;
 }
 
-/* Stage 1 doesn't need scroll — let sparkles breathe */
-#stage-1 {
-  overflow: visible;
-}
+/* Removed overflow: visible from #stage-1 to allow scrolling on small screens */
 
 .stage.hidden {
   display: none !important;
@@ -85,7 +82,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  padding: 28px 20px 0;
+  padding: 28px 20px 48px; /* Added 48px bottom padding */
   width: 100%;
   max-width: 420px;
 }
