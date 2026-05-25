@@ -58,7 +58,7 @@ async function initParticles() {
     detectRetina: true,
     fpsLimit: 60,
     particles: {
-      number: { value: 80, density: { enable: true, area: 800 } },
+      number: { value: 160, density: { enable: true, area: 800 } },
       color: {
         value: ['#ffffff', '#4a9eff', '#ff6b9d', '#a855f7'],
       },
