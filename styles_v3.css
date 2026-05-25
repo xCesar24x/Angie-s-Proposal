@@ -1,0 +1,603 @@
+/* =============================================
+   ANGIE 💙 — Date Proposal · Stitch Theme
+   GSAP + tsParticles + canvas-confetti
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --c-deep:      #060c20;
+  --c-navy:      #0d1b3e;
+  --c-blue:      #4a9eff;
+  --c-blue-lt:   #7bbcff;
+  --c-pink:      #ff6b9d;
+  --c-pink-lt:   #ffaecb;
+  --c-purple:    #a855f7;
+  --c-green:     #22c55e;
+  --c-white:     #ffffff;
+  --c-whatsapp:  #25d366;
+  --radius-xl:   28px;
+  --radius-full: 999px;
+  --glow-blue:   0 0 32px rgba(74,158,255,0.45);
+  --glow-pink:   0 0 24px rgba(255,107,157,0.45);
+  --glass:       rgba(255,255,255,0.06);
+  --glass-border:rgba(74,158,255,0.25);
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--c-deep);
+  color: var(--c-white);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* ─── Particles canvas ─── */
+#tsparticles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Stages ─── */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 0 48px;
+  overscroll-behavior: none;
+}
+
+/* Stage 1 doesn't need scroll — let sparkles breathe */
+#stage-1 {
+  overflow: visible;
+}
+
+.stage.hidden {
+  display: none !important;
+}
+
+/* ════════════════════════════════════════════
+   STAGE 1 — PROPUESTA
+════════════════════════════════════════════ */
+.s1-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 20px 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Stitch hero */
+.stitch-hero {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.stitch-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(74,158,255,0.55);
+  box-shadow: var(--glow-blue), 0 0 0 7px rgba(74,158,255,0.1);
+  display: block;
+}
+
+/* Sparkle ring */
+.sparkle-ring {
+  position: absolute;
+  inset: -32px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.sp {
+  position: absolute;
+  font-size: 22px;
+  line-height: 1;
+}
+.sp1 { top:  -2%;  left: 38%; }
+.sp2 { top:  10%;  right: 2%; }
+.sp3 { top:  48%;  right: -4%; }
+.sp4 { bottom: 2%; right: 18%; }
+.sp5 { bottom: -2%; left: 38%; }
+.sp6 { top:  48%;  left: -4%; }
+
+/* Titles */
+.s1-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #fff 30%, var(--c-blue-lt));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0; /* GSAP will animate */
+}
+
+.s1-sub {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--c-blue-lt);
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0;
+}
+
+/* Question bubble */
+.question-bubble {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 22px 28px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  box-shadow: var(--glow-blue);
+  opacity: 0;
+}
+
+.q-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.65rem;
+  text-align: center;
+  line-height: 1.4;
+  color: var(--c-white);
+}
+
+.q-emoji {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Buttons area */
+.s1-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  opacity: 0;
+}
+
+.btn-yes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  padding: 18px 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(34,197,94,0.55);
+  letter-spacing: 0.3px;
+  transition: box-shadow 0.2s;
+}
+
+.btn-yes:active {
+  box-shadow: 0 3px 12px rgba(34,197,94,0.4);
+}
+
+.btn-yes-icon { font-size: 1.4rem; }
+
+/* NO group (angry stitch + button) */
+.no-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  /* overflow visible so the btn can escape a bit without being clipped */
+  overflow: visible;
+}
+
+.stitch-angry {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* screen blend removes the black JPG background */
+  mix-blend-mode: screen;
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.btn-no {
+  padding: 13px 28px;
+  border: 2px solid rgba(255,107,157,0.45);
+  border-radius: var(--radius-full);
+  background: rgba(255,107,157,0.1);
+  color: var(--c-pink-lt);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  white-space: nowrap;
+  /* In normal document flow, positioned relative so GSAP x/y transforms work */
+  position: relative;
+  z-index: 10;
+  transition: color 0.15s;
+  will-change: transform;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: rgba(123,188,255,0.55);
+  text-align: center;
+  font-style: italic;
+  padding: 0 20px;
+  opacity: 0;
+}
+
+/* ════════════════════════════════════════════
+   STAGE 2 — CALENDAR
+════════════════════════════════════════════ */
+.s2-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 20px 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.s2-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.cal-stitch-img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  filter: drop-shadow(0 8px 20px rgba(74,158,255,0.4));
+}
+
+.s2-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #fff 30%, var(--c-blue-lt));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.s2-sub {
+  font-size: 0.9rem;
+  color: var(--c-blue-lt);
+  font-weight: 700;
+}
+
+/* Month switcher */
+.month-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+}
+
+.month-label {
+  font-family: 'Pacifico', cursive;
+  font-size: 1rem;
+  color: var(--c-blue-lt);
+}
+
+.month-btn {
+  background: rgba(74,158,255,0.15);
+  border: 1px solid rgba(74,158,255,0.35);
+  color: var(--c-white);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.month-btn:active { transform: scale(0.9); }
+.month-btn:disabled { opacity: 0.25; cursor: default; }
+
+/* Calendar card */
+.calendar-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 16px 12px;
+  width: 100%;
+  box-shadow: var(--glow-blue);
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.cal-weekdays span {
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: var(--c-blue-lt);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 4px 0;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--c-white);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.cal-day:not(.past):not(.empty):hover {
+  background: rgba(74,158,255,0.25);
+  border-color: rgba(74,158,255,0.5);
+}
+
+.cal-day:not(.past):not(.empty):active {
+  transform: scale(0.9);
+}
+
+.cal-day.selected {
+  background: linear-gradient(135deg, var(--c-blue), var(--c-purple));
+  border-color: var(--c-blue-lt);
+  box-shadow: 0 0 16px rgba(74,158,255,0.7);
+}
+
+.cal-day.today {
+  border-color: var(--c-pink);
+  color: var(--c-pink-lt);
+}
+
+.cal-day.past {
+  opacity: 0.22;
+  cursor: not-allowed;
+}
+
+.cal-day.empty { cursor: default; }
+
+/* Time picker */
+.time-picker {
+  width: 100%;
+  display: none;
+}
+
+.time-label {
+  text-align: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: var(--c-blue-lt);
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.time-slot {
+  padding: 13px 4px;
+  border-radius: 18px;
+  border: 2px solid rgba(74,158,255,0.25);
+  background: var(--glass);
+  color: var(--c-white);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  backdrop-filter: blur(8px);
+}
+
+.time-slot:hover {
+  background: rgba(74,158,255,0.2);
+  border-color: rgba(74,158,255,0.6);
+}
+
+.time-slot:active { transform: scale(0.94); }
+
+.time-slot.selected {
+  background: linear-gradient(135deg, var(--c-pink), var(--c-purple));
+  border-color: var(--c-pink-lt);
+  box-shadow: var(--glow-pink);
+}
+
+/* Confirm button */
+.btn-confirm {
+  width: 85%;
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--c-pink), var(--c-purple));
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: var(--glow-pink);
+  display: none;
+  letter-spacing: 0.3px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-confirm:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+/* ════════════════════════════════════════════
+   STAGE 3 — CONFIRMATION
+════════════════════════════════════════════ */
+.s3-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 20px 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.s3-stitch-img {
+  width: 190px;
+  height: 190px;
+  object-fit: contain;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  filter: drop-shadow(0 12px 28px rgba(74,158,255,0.5));
+}
+
+.s3-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #fff 20%, var(--c-pink-lt));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Confirm card */
+.confirm-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--glow-blue);
+}
+
+.cc-label {
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: var(--c-blue-lt);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.cc-date {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.45rem;
+  color: var(--c-white);
+  margin-bottom: 8px;
+}
+
+.cc-time {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--c-pink-lt);
+}
+
+/* WhatsApp button */
+.btn-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 88%;
+  padding: 18px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #25d366, #1aa851);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+  letter-spacing: 0.3px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-whatsapp:active {
+  transform: scale(0.96);
+  box-shadow: 0 3px 12px rgba(37,211,102,0.35);
+}
+
+/* Final message */
+.final-msg {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.72);
+  text-align: center;
+  line-height: 1.7;
+  padding: 0 10px;
+}
+
+.heartbeat {
+  display: inline-block;
+  font-size: 1.4rem;
+}
